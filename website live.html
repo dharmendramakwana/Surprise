@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="robots" content="noindex, nofollow">
+    <title>My World ♥</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --rose: #ffafbd;
+            --soft-pink: #ffc0cb;     /* yeh wala primary background */
+            --soft-bg: #fff0f5;       /* thoda light fallback */
+        }
+
+        body {
+            font-family: 'Poppins', system-ui, sans-serif;
+            background: var(--soft-pink);   /* solid color yaha set kiya */
+            color: #333;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        /* Floating Hearts */
+        #heartContainer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: #ff4d6d;
+            user-select: none;
+            animation: float linear forwards;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10%  { opacity: 0.3; }
+            90%  { opacity: 0.3; }
+            100% { transform: translateY(-15vh) rotate(360deg); opacity: 0; }
+        }
+
+        .hero-title {
+            font-family: 'Dancing Script', cursive;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Glassmorphism (ab background ke saath achha lagega) */
+        .glass {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 32px;
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 16px;
+            padding: 1.5rem;
+        }
+
+        .photo-card {
+            aspect-ratio: 4/5;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+
+        .photo-card:hover {
+            transform: scale(1.07) rotate(2deg);
+            box-shadow: 0 20px 40px rgba(255, 77, 109, 0.3);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Audio Player */
+        .audio-container {
+            background: white;
+            border: 4px solid var(--rose);
+            border-radius: 9999px;
+            padding: 1.2rem 2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 1.5rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .audio-container:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(255,77,109,0.25);
+        }
+
+        .play-circle {
+            width: 70px;
+            height: 70px;
+            background: #ff4d6d;
+            color: white;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+
+        .play-circle:hover { transform: scale(1.1); }
+
+        /* Lightbox Modal */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .lightbox-content img,
+        .lightbox-content video {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: white;
+            color: #ff4d6d;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: #ff4d6d;
+            color: white;
+        }
+
+        /* Enhanced Note Card */
+        .note-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 240, 245, 0.8) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(255, 77, 109, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .note-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 175, 189, 0.15) 0%, transparent 70%);
+            animation: rotate-glow 20s linear infinite;
+        }
+
+        @keyframes rotate-glow {
+            100% { transform: rotate(360deg); }
+        }
+
+        .note-card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .note-heading {
+            background: linear-gradient(135deg, #ff4d6d, #ff77a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="heartContainer"></div>
+
+<!-- Lightbox Modal -->
+<div id="lightbox" class="lightbox">
+    <div class="lightbox-content">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <div id="lightboxMedia"></div>
+    </div>
+</div>
+
+<!-- Hero -->
+<section class="min-h-screen flex flex-col items-center justify-center text-center px-5 relative">
+    <div class="animate__animated animate__zoomIn">
+        <h1 class="hero-title text-7xl sm:text-8xl md:text-9xl text-white mb-5 drop-shadow-lg">Hello Love...</h1>
+        <p class="text-white/95 text-xl md:text-2xl tracking-widest uppercase font-light">
+            A Small Surprise For You
+        </p>
+    </div>
+
+    <div class="absolute bottom-12 animate__animated animate__bounce animate__infinite">
+        <span class="text-white text-4xl drop-shadow-md">↓</span>
+    </div>
+</section>
+
+<!-- Sweet Note -->
+<section class="py-20 px-6 flex justify-center">
+    <div class="note-card max-w-2xl w-full p-10 md:p-14 text-center">
+        <div class="note-card-content">
+            <h2 class="note-heading text-4xl md:text-5xl font-bold mb-8" style="font-family: 'Playfair Display', serif;">
+                A Note for You
+            </h2>
+            <p id="typewriter" class="text-xl md:text-2xl leading-relaxed text-gray-800 italic min-h-[140px]"></p>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery -->
+<section class="max-w-7xl mx-auto py-16 px-6">
+    <h2 class="text-5xl text-center text-white mb-16 hero-title drop-shadow-lg">Our Best Moments</h2>
+    <div class="gallery-grid">
+        <div class="photo-card" data-src="1.jpg" data-type="image"><img src="/IMG-20251020-WA0003.jpg.jpeg" alt="memory" loading="lazy"></div>
+        <div class="photo-card" data-src="2.jpg" data-type="image"><img src="/Screenshot_2026-02-11-22-48-35-60_a63b0f8076346d26cbdc1b971a1da2a7.jpg.jpeg" alt="memory" loading="lazy"></div>
+        <div class="photo-card" data-src="3.jpg" data-type="image"><img src="/Snapchat-1256636435.jpg.jpeg" alt="memory" loading="lazy"></div>
+        <div class="photo-card" data-src="4.jpg" data-type="image"><img src="/Snapchat-2053889789.jpg.jpeg" alt="memory" loading="lazy"></div>
+        <div class="photo-card" data-src="5.jpg" data-type="image"><img src="/Snapchat-595715558.jpg.jpeg" alt="memory" loading="lazy"></div>
+        <div class="photo-card" data-src="6.jpg" data-type="image"><img src="/Snapchat-913283341.jpg.jpeg" alt="memory" loading="lazy"></div>
+    </div>
+</section>
+
+<!-- Video Section -->
+<section class="py-20 px-6 flex flex-col items-center">
+    <h2 class="text-5xl text-white mb-12 hero-title drop-shadow-lg">Special Moments</h2>
+    <div class="glass max-w-4xl w-full p-6 md:p-8 cursor-pointer" id="videoCard" data-src="video.mp4" data-type="video">
+        <video 
+            id="videoPlayer" 
+            class="w-full rounded-2xl shadow-2xl pointer-events-none"
+            poster="video-thumbnail.jpg"
+            preload="metadata"
+            playsinline
+            muted>
+            <source src="video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p class="text-center text-white mt-4 text-lg">Click to play in fullscreen</p>
+    </div>
+</section>
+
+<!-- Audio -->
+<section class="py-24 text-center">
+    <h2 class="text-5xl text-white mb-10 hero-title drop-shadow-lg">Listen To My Voice</h2>
+    
+    <div class="audio-container mx-auto">
+        <div class="play-circle" id="playBtn">▶</div>
+        <div class="text-left">
+            <p class="font-bold text-gray-900 text-lg">Voice Note For You</p>
+            <p class="text-sm text-gray-600" id="audioStatus">Press Play</p>
+        </div>
+    </div>
+
+    <audio id="myAudio" preload="none">
+        <source src="voice.mp3" type="audio/mpeg">
+    </audio>
+</section>
+
+<!-- Footer -->
+<footer class="py-24 text-center text-white">
+    <p class="text-6xl hero-title mb-4 drop-shadow-lg">I Love You ❤️</p>
+    <p class="text-xl opacity-90">Forever & Always</p>
+</footer>
+
+<script>
+// Lightbox Functions
+function openLightbox(src, type) {
+    const lightbox = document.getElementById('lightbox');
+    const mediaContainer = document.getElementById('lightboxMedia');
+    
+    if (type === 'image') {
+        mediaContainer.innerHTML = `<img src="${src}" alt="Memory">`;
+    } else if (type === 'video') {
+        mediaContainer.innerHTML = `
+            <video controls autoplay playsinline class="w-full rounded-2xl">
+                <source src="${src}" type="video/mp4">
+            </video>
+        `;
+    }
+    
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox(event) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    const lightbox = document.getElementById('lightbox');
+    const mediaContainer = document.getElementById('lightboxMedia');
+    
+    lightbox.classList.remove('active');
+    mediaContainer.innerHTML = '';
+    document.body.style.overflow = 'auto';
+}
+
+// Lightbox event listeners
+document.getElementById('lightboxClose').addEventListener('click', (e) => {
+    e.preventDefault();
+    closeLightbox();
+});
+
+document.getElementById('lightbox').addEventListener('click', (e) => {
+    if (e.target.id === 'lightbox') {
+        e.preventDefault();
+        closeLightbox();
+    }
+});
+
+document.querySelector('.lightbox-content').addEventListener('click', (e) => {
+    e.stopPropagation();
+});
+
+// Close on Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+});
+
+// Add click listeners to photo cards
+document.querySelectorAll('.photo-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+        e.preventDefault();
+        const src = card.getAttribute('data-src');
+        const type = card.getAttribute('data-type');
+        openLightbox(src, type);
+    });
+});
+
+// Add click listener to video card
+const videoCard = document.getElementById('videoCard');
+if (videoCard) {
+    videoCard.addEventListener('click', (e) => {
+        e.preventDefault();
+        const src = videoCard.getAttribute('data-src');
+        const type = videoCard.getAttribute('data-type');
+        openLightbox(src, type);
+    });
+}
+
+// Floating Hearts
+const heartContainer = document.getElementById('heartContainer');
+const hearts = ['❤️','💖','💗','💕','💘','💞'];
+
+function createHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'floating-heart';
+    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+    heart.style.animationDuration = (Math.random() * 10 + 20) + 's'; // 20-30 seconds (slower)
+    heartContainer.appendChild(heart);
+    setTimeout(() => heart.remove(), 30000);
+}
+
+setInterval(createHeart, 2000); // Every 2 seconds instead of 500ms
+
+
+// Typewriter
+const message = "Since the day you entered my life, everything has become more beautiful. These photos are just a small glimpse of the happiness you've given me. Thank you for being mine...";
+let i = 0;
+const typewriter = document.getElementById('typewriter');
+
+function type() {
+    if (i < message.length) {
+        typewriter.textContent += message[i++];
+        setTimeout(type, 55);
+    }
+}
+
+new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) {
+        type();
+        e.target.parentElement.classList.add('animate__animated', 'animate__fadeInUp');
+    }
+}, {threshold: 0.5}).observe(typewriter);
+
+
+// Audio
+const audio = document.getElementById('myAudio');
+const playBtn = document.getElementById('playBtn');
+const statusEl = document.getElementById('audioStatus');
+
+playBtn.onclick = (e) => {
+    e.preventDefault();
+    if (audio.paused) {
+        audio.play().catch(err => console.log('Audio play failed:', err));
+        playBtn.textContent = '⏸';
+        statusEl.textContent = 'Now Playing...';
+    } else {
+        audio.pause();
+        playBtn.textContent = '▶';
+        statusEl.textContent = 'Paused';
+    }
+};
+
+audio.addEventListener('ended', () => {
+    playBtn.textContent = '▶';
+    statusEl.textContent = 'Press Play';
+});
+</script>
+</body>
+</html>
