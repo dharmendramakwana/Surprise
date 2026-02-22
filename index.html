@@ -277,30 +277,33 @@
 <section class="max-w-7xl mx-auto py-16 px-6">
     <h2 class="text-5xl text-center text-white mb-16 hero-title drop-shadow-lg">Our Best Moments</h2>
     <div class="gallery-grid">
-        <div class="photo-card" data-src="IMG-1.jpg.jpeg" data-type="image"><img src="image/IMG-1.jpg.jpeg" alt="memory" loading="lazy"></div>
-        <div class="photo-card" data-src="IMG-2.jpg.jpeg" data-type="image"><img src="image/IMG-2.jpg.jpeg" alt="memory" loading="lazy"></div>
-        <div class="photo-card" data-src="Snapchat-1256636435.jpg.jpeg" data-type="image"><img src="image/IMG-3.jpg.jpeg" alt="memory" loading="lazy"></div>
-        <div class="photo-card" data-src="Snapchat-2053889789.jpg.jpeg" data-type="image"><img src="image/IMG-4.jpg.jpeg" alt="memory" loading="lazy"></div>
-        <div class="photo-card" data-src="Snapchat-595715558.jpg.jpeg" data-type="image"><img src="image/IMG-5.jpg.jpeg" alt="memory" loading="lazy"></div>
-        <div class="photo-card" data-src="Snapchat-913283341.jpg.jpeg" data-type="image"><img src="image/IMG-6.jpg.jpeg" alt="memory" loading="lazy"></div>
+        <div class="photo-card" data-src="IMG-1.jpg.jpeg" data-type="image"><img src="image/IMG-11.jpeg" alt="memory" loading="lazy"></div>
+        <div class="photo-card" data-src="IMG-2.jpg.jpeg" data-type="image"><img src="image/IMG-12.jpeg" alt="memory" loading="lazy"></div>
+        <div class="photo-card" data-src="Snapchat-1256636435.jpg.jpeg" data-type="image"><img src="image/IMG-13.jpeg" alt="memory" loading="lazy"></div>
+        <div class="photo-card" data-src="Snapchat-2053889789.jpg.jpeg" data-type="image"><img src="image/IMG-14.jpeg" alt="memory" loading="lazy"></div>
+        <div class="photo-card" data-src="Snapchat-595715558.jpg.jpeg" data-type="image"><img src="image/IMG-15.jpeg" alt="memory" loading="lazy"></div>
+        <div class="photo-card" data-src="Snapchat-913283341.jpg.jpeg" data-type="image"><img src="image/IMG-16.jpeg" alt="memory" loading="lazy"></div>
     </div>
 </section>
 
 <!-- Video Section -->
+<!-- Video Section - AUTOPLAY -->
 <section class="py-20 px-6 flex flex-col items-center">
     <h2 class="text-5xl text-white mb-12 hero-title drop-shadow-lg">Special Moments</h2>
-    <div class="glass max-w-4xl w-full p-6 md:p-8 cursor-pointer" id="videoCard" data-src="video.mp4" data-type="video">
+    <div class="glass max-w-4xl w-full p-6 md:p-8">
         <video 
             id="videoPlayer" 
-            class="w-full rounded-2xl shadow-2xl pointer-events-none"
-            poster="video-thumbnail.jpg"
+            controls
+            autoplay
+            muted
+            loop
+            class="w-full rounded-2xl shadow-2xl"
             preload="metadata"
-            playsinline
-            muted>
-            <source src="video.mp4" type="video/mp4">
+            playsinline>
+            <source src="Video/Video.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <p class="text-center text-white mt-4 text-lg">Click to play in fullscreen</p>
+        <p class="text-center text-white mt-4 text-lg">Video playing automatically</p>
     </div>
 </section>
 
@@ -317,13 +320,13 @@
     </div>
 
     <audio id="myAudio" preload="none">
-        <source src="voice.mp3" type="audio/mpeg">
+        <source src="Audio/WhatsApp Audio 2026-02-23 at 12.22.25 AM.mpeg" type="audio/mpeg">
     </audio>
 </section>
 
 <!-- Footer -->
 <footer class="py-24 text-center text-white">
-    <p class="text-6xl hero-title mb-4 drop-shadow-lg">I Love You ❤️</p>
+    <p class="text-6xl hero-title mb-4 drop-shadow-lg">I Love Mo.... ❤️</p>
     <p class="text-xl opacity-90">Forever & Always</p>
 </footer>
 
@@ -422,7 +425,7 @@ setInterval(createHeart, 2000); // Every 2 seconds instead of 500ms
 
 
 // Typewriter
-const message = "hlo baby i want so i love you i love you and i love you. These photos are just a small glimpse of the happiness you've given me. Thank you for being mine...";
+const message = "Mera pyaara bachcha love you so much I just want to tell you I miss you every day every time bahut bahut zyada aur mujhe nahi pata kitna pyaar karta hu but bahut zyada pyaar karta hu bata nahi sakta Please stay with me Love you";
 let i = 0;
 const typewriter = document.getElementById('typewriter');
 
