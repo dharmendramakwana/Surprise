@@ -425,8 +425,9 @@ setInterval(createHeart, 2000); // Every 2 seconds instead of 500ms
 
 
 // Typewriter
-const message = "Mera pyaara bachcha love you so much I just want to tell you I miss you every day every time bahut bahut zyada aur mujhe nahi pata kitna pyaar karta hu but bahut zyada pyaar karta hu bata nahi sakta Please stay with me Love you";
+const message = "Mera pyaara bachcha love you so much I just want to tell you I miss you every day every time bahut bahut zyada aur mujhe nahi pata kitna pyaar karta hu but bahut zyada pyaar karta hu bata nahi sakta Please stay with me Love you Beta❤️";
 let i = 0;
+let typingStarted = false; // ✅ YEH LINE ADD KARO
 const typewriter = document.getElementById('typewriter');
 
 function type() {
@@ -436,12 +437,16 @@ function type() {
     }
 }
 
-new IntersectionObserver(([e]) => {
-    if (e.isIntersecting) {
+const observer = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting && !typingStarted) { // ✅ YEH CONDITION ADD KARO
+        typingStarted = true; // ✅ YEH LINE ADD KARO
         type();
         e.target.parentElement.classList.add('animate__animated', 'animate__fadeInUp');
+        observer.unobserve(e.target); // ✅ YEH LINE ADD KARO
     }
-}, {threshold: 0.5}).observe(typewriter);
+}, {threshold: 0.5});
+
+observer.observe(typewriter); // ✅ BAHAR RAKHO
 
 
 // Audio
